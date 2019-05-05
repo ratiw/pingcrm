@@ -62,3 +62,6 @@ Route::get('reports')->name('reports')->uses('ReportsController')->middleware('a
 Route::get('500', function () {
     echo $fail;
 });
+
+// Upload
+Route::post('upload')->name('fileupload')->uses('UploadController@store')->middleware('auth');
