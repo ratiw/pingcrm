@@ -26,6 +26,7 @@
           <text-input v-model="form.postal_code" :errors="errors.postal_code" class="pr-6 pb-8 w-full lg:w-1/2" label="Postal code" />
         </div>
         <div class="px-8 py-4 bg-grey-lightest border-t border-grey-lighter flex justify-end items-center">
+          <uploader></uploader>
           <loading-button :loading="sending" class="btn-indigo" type="submit">Create Contact</loading-button>
         </div>
       </form>
@@ -38,6 +39,7 @@ import Layout from '@/Shared/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
+import Uploader from '@/Shared/Uploader'
 
 export default {
   components: {
@@ -45,6 +47,7 @@ export default {
     LoadingButton,
     SelectInput,
     TextInput,
+    Uploader,
   },
   props: {
     organizations: Array,
