@@ -12,21 +12,27 @@
 <script>
 import FileAPI from '@/libs/FileAPI/FileAPI.min.js'
 
-FileAPI.debug = true
-
 export default {
+	props: {
+		url: String,
+		options: {
+			type: Object,
+			default: () => ({}),
+		}
+	},
+
   data() {
     return {
-      url: '/upload',
       fileapi: FileAPI,
     }
   },
+
   mounted() {
+		this.init()
+
 		var choose = document.getElementById('choose');
     var images = document.getElementById('images');
     var self = this
-
-    console.log('FileAPI: ', FileAPI)
 
 		FileAPI.event.on(choose, 'change', function (evt) {
 			var files = FileAPI.getFiles(evt); // Retrieve file list
@@ -57,6 +63,20 @@ export default {
 				}
 			});
 		});
-  }
+	},
+	
+	methods: {
+		init() {
+			FileAPI.debug = true
+			FileAPI.staticPath = this.staticPath
+
+			for (var x in this.options) {
+				console.log(x, this.options[x])
+				if (typeof(FileAPI[x]) !== undefined) {
+					FileAPI[x] = this.options[x]
+				}
+			}
+		}
+	}
 }
 </script>

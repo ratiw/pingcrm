@@ -25,9 +25,9 @@
           </select-input>
           <text-input v-model="form.postal_code" :errors="errors.postal_code" class="pr-6 pb-8 w-full lg:w-1/2" label="Postal code" />
         </div>
-        <div class="px-8 py-4 bg-grey-lightest border-t border-grey-lighter flex justify-end items-center">
-          <uploader></uploader>
-          <loading-button :loading="sending" class="btn-indigo" type="submit">Create Contact</loading-button>
+        <div class="px-8 py-4 bg-grey-lightest border-t border-grey-lighter flex items-center">
+          <uploader url="/upload" :options="uploaderOptions"></uploader>
+          <loading-button :loading="sending" class="btn-indigo ml-auto" type="submit">Create Contact</loading-button>
         </div>
       </form>
     </div>
@@ -40,6 +40,7 @@ import LoadingButton from '@/Shared/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
 import Uploader from '@/Shared/Uploader'
+import UploaderOptions from '@/Shared/UploaderOptions'
 
 export default {
   components: {
@@ -72,6 +73,7 @@ export default {
         country: null,
         postal_code: null,
       },
+      uploaderOptions: UploaderOptions,
     }
   },
   methods: {
