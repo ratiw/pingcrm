@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class UploadController extends Controller
 {
 	protected $uploadPath = 'public/storage/upload/';
 	
-	public function store()
+	public function store(Request $request)
 	{
-		$file = Input::file('filedata');
+		$file = $request->file('filedata');
+		// return response()->json(['Got' => $file]);
 		$filename = str_random(16);
 		$extension = $file->getClientOriginalExtension();
 		$size = $file->getSize();
@@ -18,11 +21,11 @@ class UploadController extends Controller
 		
 		if ($uploadSuccess)
 		{
-			return Response::json(['name' => $fullname, 'size' => $size], 200);
+			return response()->json(['name' => $fullname, 'size' => $size], 200);
 		}
 		else
 		{
-			return Response::json('error', 400);
+			return response()->json('error', 400);
 		}
 	}
 	

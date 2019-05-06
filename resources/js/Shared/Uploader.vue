@@ -12,21 +12,28 @@
 <script>
 import FileAPI from '@/libs/FileAPI/FileAPI.min.js'
 
-FileAPI.debug = true
-
 export default {
+	props: {
+		url: String,
+		options: {
+			type: Object,
+			default: () => ({}),
+		}
+	},
+
   data() {
     return {
-      url: '/upload',
-      fileapi: FileAPI,
+			fileapi: FileAPI,
+			csrfToken: null,
     }
   },
+
   mounted() {
+		this.init()
+
 		var choose = document.getElementById('choose');
     var images = document.getElementById('images');
     var self = this
-
-    console.log('FileAPI: ', FileAPI)
 
 		FileAPI.event.on(choose, 'change', function (evt) {
 			var files = FileAPI.getFiles(evt); // Retrieve file list
@@ -42,13 +49,17 @@ export default {
 					FileAPI.each(files, function (file) {
 						FileAPI.Image(file).preview(100).get(function (err, img) {
 							images.appendChild(img);
+							console.log('**** ', err)
 						});
 					});
 
 					// Uploading Files
 					FileAPI.upload({
 						url: self.url,
-						files: { images: files },
+						headers: {
+							'X-CSRF-TOKEN': self.csrfToken,
+						},
+						files: { filedata: files },
 						progress: function (evt) { /* ... */ },
 						complete: function (err, xhr) {
               console.log('complete', xhr, err)
@@ -57,6 +68,32 @@ export default {
 				}
 			});
 		});
-  }
+	},
+	
+	methods: {
+		init() {
+			this.getCsrfToken()
+
+			FileAPI.debug = true
+			FileAPI.staticPath = this.staticPath
+
+			for (var x in this.options) {
+				console.log(x, this.options[x])
+				if (typeof(FileAPI[x]) !== undefined) {
+					FileAPI[x] = this.options[x]
+				}
+			}
+		},
+
+		getCsrfToken() {
+			const meta = document.getElementsByTagName('meta')
+
+			for(var i = 0; i < meta.length; i++) {
+				if (meta[i].name.toLowerCase() === 'csrf-token') {
+					this.csrfToken = meta[i].content
+				}
+			}
+		}
+	}
 }
 </script>
