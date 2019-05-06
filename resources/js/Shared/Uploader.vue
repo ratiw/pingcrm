@@ -60,9 +60,20 @@ export default {
 							'X-CSRF-TOKEN': self.csrfToken,
 						},
 						files: { filedata: files },
+						imageTransform: {
+							maxWidth: 1080,
+							maxHeight: 1080,
+							type: 'image/jpeg',
+							quality: 0.86,
+						},
+						imageAutoOrientation: true,
 						progress: function (evt) { /* ... */ },
 						complete: function (err, xhr) {
-              console.log('complete', xhr, err)
+							if (err) {
+								console.log('upload error: ', err)
+							} else {
+								console.log('upload complete: ', xhr)
+							}
             }
 					});
 				}
