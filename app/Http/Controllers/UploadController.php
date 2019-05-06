@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class UploadController extends Controller
 {
-	protected $uploadPath = 'public/storage/upload/';
+	protected $uploadPath = 'storage/upload/';
 	
 	public function store(Request $request)
 	{
