@@ -2,9 +2,11 @@
   <div>
 		<!-- "js-fileapi-wrapper" -- required class -->
 		<div class="js-fileapi-wrapper upload-btn">
+			<div class="btn-indigo flex items-center" @click="selectFiles">Choose files</div>
 			<div class="upload-btn__txt">Choose files</div>
-			<input id="choose" name="files" type="file" multiple />
+			<input ref="fileInput" id="choose" name="files" type="file" multiple />
 		</div>
+		<div id="cam"></div>
 		<div id="images"><!-- previews --></div>
 	</div>
 </template>
@@ -32,7 +34,8 @@ export default {
 		this.init()
 
 		var choose = document.getElementById('choose');
-    var images = document.getElementById('images');
+		var images = document.getElementById('images');
+		var camera = document.getElementById('cam')
     var self = this
 
 		FileAPI.event.on(choose, 'change', function (evt) {
@@ -104,7 +107,17 @@ export default {
 					this.csrfToken = meta[i].content
 				}
 			}
-		}
+		},
+
+		selectFiles() {
+			this.$refs.fileInput.click()
+		},
 	}
 }
 </script>
+
+<style>
+#choose {
+	opacity: .5;
+}
+</style>
