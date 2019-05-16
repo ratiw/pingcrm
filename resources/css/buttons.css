@@ -3,3 +3,8 @@
 
   &:hover, &:focus { @apply bg-orange }
 }
+.btn-grey {
+  @apply px-6 py-3 rounded bg-grey-dark text-white text-sm font-bold whitespace-no-wrap;
+
+  &:hover, &:focus { @apply bg-orange }
+}
