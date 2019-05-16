@@ -55,6 +55,8 @@ Route::put('contacts/{contact}')->name('contacts.update')->uses('ContactsControl
 Route::delete('contacts/{contact}')->name('contacts.destroy')->uses('ContactsController@destroy')->middleware('auth');
 Route::put('contacts/{contact}/restore')->name('contacts.restore')->uses('ContactsController@restore')->middleware('auth');
 
+Route::get('inventories')->name('inventories')->uses('InventoriesController@index')->middleware('remember', 'auth');
+
 // Reports
 Route::get('reports')->name('reports')->uses('ReportsController')->middleware('auth');
 
